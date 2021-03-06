@@ -15,13 +15,25 @@ io.sockets.on('connection', newConnection);
 function newConnection(socket) {
 
     console.log('new connection: ' + socket.id);
-
-    let oscPort = new osc.WebSocketPort({
-        url: 'http://localhost:3001',
-        metadata: true
-    });
-    oscPort.open();
 }
+
+let osc = require('osc');
+
+let udpPort = new osc.UDPPort({
+    localAddress: '0.0.0.0',
+    localPort: 3001,
+    metadata: true
+});
+
+udpPort.on('message', (oscMsg, timeTag, info) => {
+    console.log(oscMsg.args[0].value);
+});
+
+udpPort.on('error', (err) => {
+    console.log(`Error message: ${err}`);
+});
+
+udpPort.open();
 
 console.log('The server is running');
 
