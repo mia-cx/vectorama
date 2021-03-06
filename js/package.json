@@ -1,0 +1,28 @@
+{
+  "name": "vectorama",
+  "version": "1.0.0",
+  "description": "A node application for visualizing MaxMSP audio signal, converting to OSC, with a vectorscope on multiple webpages",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^3.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Vectorama"
+  },
+  "keywords": [
+    "CSD",
+    "Max",
+    "JS",
+    "OSC",
+    "Node"
+  ],
+  "author": "Krijn Schelvis, mia.cx, Milo Mooi Wilten",
+  "license": "ISC"
+}
