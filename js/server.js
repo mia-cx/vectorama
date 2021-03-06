@@ -17,6 +17,7 @@ function newConnection(socket) {
     console.log('new connection: ' + socket.id);
 }
 
+// OSC Server
 let osc = require('osc');
 
 let udpPort = new osc.UDPPort({
@@ -26,7 +27,7 @@ let udpPort = new osc.UDPPort({
 });
 
 udpPort.on('message', (oscMsg, timeTag, info) => {
-    console.log(oscMsg.args[0].value);
+    if(oscMsg.address === '/message') console.log(oscMsg.args[0].value);
 });
 
 udpPort.on('error', (err) => {
