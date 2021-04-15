@@ -22,7 +22,7 @@ let osc = require('osc');
 
 let udpPort = new osc.UDPPort({
     localAddress: '0.0.0.0',
-    localPort: 3001,
+    localPort: 3005,
     metadata: true
 });
 
@@ -35,6 +35,20 @@ udpPort.on('error', (err) => {
 });
 
 udpPort.open();
+
+udpPort.send({
+    address: '/test',
+    args: [
+        {
+            type: 'i',
+            value: 420
+        },
+        {
+            type: 's',
+            value: 'string'
+        }
+    ]
+}, 'mia.cx', 51234);
 
 console.log('The server is running');
 
