@@ -5,8 +5,9 @@ let screen = {
 }
 
 let chainBox;
-
+let selectionScreen;
 let fxSlots = [];
+let state = 0;
 
 function setup() {
 
@@ -23,9 +24,25 @@ function setup() {
 function draw() {
     background(screen.color);
 
-    chainBox.show();
-    for (let i = 0; i < fxSlots.length; i++) {
-        fxSlots[i].show();
+    if (state === 0) {
+        chainBox.show();
+    }
+    if (state === 1) {
+        selectionScreen.show();
+    }
+}
+
+function mouseReleased() {
+    if (state === 0) {
+        for (let i = 0; i < fxSlots.length; i++) {
+            fxSlots[i].mouseReleased();
+        }
+        return
+    }
+
+    if (state === 1) {
+        selectionScreen.mouseReleased();
+        return
     }
 }
 
