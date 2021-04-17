@@ -33,14 +33,20 @@ class SelectionButton {
         pop();
     }
 
-    mouseReleased() {
+    mouseReleased(slot) {
         if (rectHitbox(this.x, this.y, 300, 100)) {
-            this.addEffect();
+            this.addEffect(slot);
         }
     }
 
-    addEffect() {
-        console.log(this.effect);
+    addEffect(slot) {
+        if (this.effect === 'Return') {
+            selectionScreen.selfDestruct();
+        }
+        if (this.effect === 'Filter') {
+            fxSlots[slot - 1] = new FilterSlot(slot - 1);
+            selectionScreen.selfDestruct();
+        }
     }
 }
 
@@ -80,7 +86,13 @@ class SelectionScreen extends ChainBox {
 
     mouseReleased() {
         for (let i = 0; i < this.buttons.length; i++) {
-            this.buttons[i].mouseReleased();
+            this.buttons[i].mouseReleased(this.currentSlot);
         }
+    }
+
+    selfDestruct() {
+        chainBox = new ChainBox();
+        state = 0;
+        selectionScreen = undefined;
     }
 }
