@@ -5,7 +5,7 @@ let screen = {
 }
 
 let chainBox;
-let selectionScreen;
+let effectSelectionScreen;
 let fxSlots = [];
 let state = 0;
 
@@ -30,7 +30,7 @@ function draw() {
         chainBox.show();
     }
     if (state === 1) {
-        selectionScreen.show();
+        effectSelectionScreen.show();
     }
 }
 
@@ -52,7 +52,7 @@ function mouseReleased() {
     }
 
     if (state === 1 && mouseLock === false) {
-        selectionScreen.mouseReleased();
+        effectSelectionScreen.mouseReleased();
         return
     }
 }

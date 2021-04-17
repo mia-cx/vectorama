@@ -76,7 +76,7 @@ class EmptySlot extends Slot {
     }
 
     newEffect() {
-        selectionScreen = new SelectionScreen(this.currentSlot);
+        effectSelectionScreen = new EffectSelectionScreen(this.currentSlot, ['Filter', 'EQ', 'Delay', 'Distortion', 'WaveShaper', 'Return']);
         state = 1;
         chainBox = undefined;
     }
@@ -85,44 +85,40 @@ class EmptySlot extends Slot {
 
 class FilterSlot extends Slot {
 
-    constructor(slot) {
+    constructor(slot, type) {
         super(slot);
+
+        this.type = type;
 
         this.text = {
             filter: {
-                value: 'Filter',
+                value: this.type,
                 x: 0,
-                y: -45,
+                y: -40,
                 size: 30
             },
-            lp: {
-                value: 'LP',
-                x: -105,
+            f: {
+                value: 'Frequency',
+                x: -90,
                 y: 0,
                 size: 15
             },
-            hp: {
-                value: 'HP',
-                x: -35,
+            b: {
+                value: 'Bandwidth',
+                x: 0,
                 y: 0,
                 size: 15
             },
-            np: {
-                value: 'NP',
-                x: 35,
-                y: 0,
-                size: 15
-            },
-            bp: {
-                value: 'BP',
-                x: 105,
+            r: {
+                value: 'Rolloff',
+                x: 90,
                 y: 0,
                 size: 15
             },
             color: 150
         }
 
-        this.knobs = [new Knob(this.x - 105, this.y + 30), new Knob(this.x - 35, this.y + 30), new Knob(this.x + 35, this.y + 30), new Knob(this.x + 105, this.y + 30)];
+        this.knobs = [new Knob(this.x - 90, this.y + 30), new Knob(this.x, this.y + 30), new Knob(this.x + 90, this.y + 30)];
     }
 
     show() {
@@ -138,27 +134,21 @@ class FilterSlot extends Slot {
         pop();
 
         push();
-        textSize(this.text.lp.size);
-        translate(this.x, this. y);
-        text(this.text.lp.value, this.text.lp.x, this.text.lp.y);
+        textSize(this.text.f.size);
+        translate(this.x, this.y);
+        text(this.text.f.value, this.text.f.x, this.text.f.y);
         pop();
 
         push();
-        textSize(this.text.hp.size);
-        translate(this.x, this. y);
-        text(this.text.hp.value, this.text.hp.x, this.text.hp.y);
+        textSize(this.text.b.size);
+        translate(this.x, this.y);
+        text(this.text.b.value, this.text.b.x, this.text.b.y);
         pop();
 
         push();
-        textSize(this.text.np.size);
-        translate(this.x, this. y);
-        text(this.text.np.value, this.text.np.x, this.text.np.y);
-        pop();
-
-        push();
-        textSize(this.text.bp.size);
-        translate(this.x, this. y);
-        text(this.text.bp.value, this.text.bp.x, this.text.bp.y);
+        textSize(this.text.r.size);
+        translate(this.x, this.y);
+        text(this.text.r.value, this.text.r.x, this.text.r.y);
         pop();
         pop();
 

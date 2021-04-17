@@ -1,9 +1,11 @@
 
-class SelectionButton {
+class EffectSelectionButton {
 
-    constructor(i, effect) {
+    constructor(i, effect, height) {
+        this.width = 300;
+        this.height = height;
         this.x = 800;
-        this.y = (screen.height / 2) - 300 + 100 * (i + 1) - 50;
+        this.y = (screen.height / 2) - this.width + this.height * (i + 1) - (this.height / 2);
         this.effect = effect;
 
         this.text = {
@@ -20,9 +22,9 @@ class SelectionButton {
     show() {
         push();
         noStroke();
-        if (mouseIsPressed && rectHitbox(this.x, this.y, 300, 100)) {
+        if (mouseIsPressed && rectHitbox(this.x, this.y, this.width, this.height)) {
             fill(this.text.color.fillPressed);
-        } else if (rectHitbox(this.x, this.y, 300, 100)) {
+        } else if (rectHitbox(this.x, this.y, this.height, this.height)) {
             fill(this.text.color.fillMouseOver);
         } else {
             fill(this.text.color.fill);
@@ -34,33 +36,48 @@ class SelectionButton {
     }
 
     mouseReleased(slot) {
-        if (rectHitbox(this.x, this.y, 300, 100)) {
+        if (rectHitbox(this.x, this.y, this.width, this.height)) {
             this.addEffect(slot);
         }
     }
 
     addEffect(slot) {
         if (this.effect === 'Return') {
-            selectionScreen.selfDestruct();
+            effectSelectionScreen.selfDestruct();
         }
         if (this.effect === 'Filter') {
-            fxSlots[slot - 1] = new FilterSlot(slot - 1);
-            selectionScreen.selfDestruct();
+            effectSelectionScreen.filterSelectionScreen();
+        }
+        if (this.effect === 'LowPass') {
+            fxSlots[slot - 1] = new FilterSlot(slot - 1, 'LowPass');
+            effectSelectionScreen.selfDestruct();
+        }
+        if (this.effect === 'HighPass') {
+            fxSlots[slot - 1] = new FilterSlot(slot - 1, 'HighPass');
+            effectSelectionScreen.selfDestruct();
+        }
+        if (this.effect === 'NotchPass') {
+            fxSlots[slot - 1] = new FilterSlot(slot - 1, 'NotchPass');
+            effectSelectionScreen.selfDestruct();
+        }
+        if (this.effect === 'BandPass') {
+            fxSlots[slot - 1] = new FilterSlot(slot - 1, 'BandPass');
+            effectSelectionScreen.selfDestruct();
         }
     }
 }
 
 
-class SelectionScreen extends ChainBox {
+class EffectSelectionScreen extends ChainBox {
 
-    constructor(slot) {
+    constructor(slot, effects) {
         super()
         this.currentSlot = slot;
-        this.effects = ['Filter', 'EQ', 'Delay', 'Distortion', 'WaveShaper', 'Return']
+        this.effects = effects;
         this.buttons = [];
 
         for (let i = 0; i < this.effects.length; i++) {
-            this.buttons[i] = new SelectionButton(i, this.effects[i]);
+            this.buttons[i] = new EffectSelectionButton(i, this.effects[i], 600 / this.effects.length);
         }
     }
 
@@ -93,6 +110,10 @@ class SelectionScreen extends ChainBox {
     selfDestruct() {
         chainBox = new ChainBox();
         state = 0;
-        selectionScreen = undefined;
+        effectSelectionScreen = undefined;
+    }
+
+    filterSelectionScreen() {
+        effectSelectionScreen = new EffectSelectionScreen(this.currentSlot, ['LowPass', 'HighPass', 'NotchPass', 'BandPass'])
     }
 }
