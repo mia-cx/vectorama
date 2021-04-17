@@ -89,6 +89,7 @@ class FilterSlot extends Slot {
         super(slot);
 
         this.type = type;
+        this.clearButton = new ClearButton(this.x, this.y, this.currentSlot);
 
         this.text = {
             filter: {
@@ -155,12 +156,17 @@ class FilterSlot extends Slot {
         for (let i = 0; i < this.knobs.length; i++) {
             this.knobs[i].show();
         }
+        this.clearButton.show();
     }
 
     mousePressed() {
         for (let i = 0; i < this.knobs.length; i++) {
             this.knobs[i].changeValue();
         }
+    }
+
+    mouseReleased() {
+        this.clearButton.clear();
     }
 }
 
@@ -225,6 +231,56 @@ class Knob {
 
     evaluate() {
         return this.value;
+    }
+}
+
+
+class ClearButton {
+
+    constructor(x, y, slot) {
+        this.x = x + 130;
+        this.y = y - 55;
+        this.size = 20;
+        this.l1 = {
+            x1: this.x - (this.size / 2),
+            y1: this.y - (this.size / 2),
+            x2: this.x + (this.size / 2),
+            y2: this.y + (this.size / 2)
+        }
+        this.l2 = {
+            x1: this.x + (this.size / 2),
+            y1: this.y - (this.size / 2),
+            x2: this.x - (this.size / 2),
+            y2: this.y + (this.size / 2)
+        }
+
+        this.color = {
+            stroke: 60,
+            mouseOver: 50,
+            mousePressed: 65
+        }
+        this.currentSlot = slot;
+    }
+
+    show() {
+        push();
+        if (rectHitbox(this.x, this.y, 15, 15) && mouseIsPressed) {
+            stroke(this.color.mousePressed);
+        } else if (rectHitbox(this.x, this.y, 15, 15)) {
+            stroke(this.color.mouseOver);
+        } else {
+            stroke(this.color.stroke);
+        }
+        strokeWeight(3);
+        line(this.l1.x1, this.l1.y1, this.l1.x2, this.l1.y2);
+        line(this.l2.x1, this.l2.y1, this.l2.x2, this.l2.y2);
+        pop();
+    }
+
+    clear() {
+        if (rectHitbox(this.x, this.y, 15, 15)) {
+            fxSlots[this.currentSlot - 1] = new EmptySlot(this.currentSlot - 1);
+        }
     }
 }
 

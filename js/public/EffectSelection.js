@@ -114,6 +114,6 @@ class EffectSelectionScreen extends ChainBox {
     }
 
     filterSelectionScreen() {
-        effectSelectionScreen = new EffectSelectionScreen(this.currentSlot, ['LowPass', 'HighPass', 'NotchPass', 'BandPass'])
+        effectSelectionScreen = new EffectSelectionScreen(this.currentSlot, ['LowPass', 'HighPass', 'NotchPass', 'BandPass', 'Return'])
     }
 }
