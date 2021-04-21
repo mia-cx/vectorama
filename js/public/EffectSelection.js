@@ -48,6 +48,11 @@ class EffectSelectionButton {
         if (this.effect === 'Filter') {
             effectSelectionScreen.filterSelectionScreen();
         }
+        if (this.effect === 'EQ') {
+            fxSlots[slot - 1] = new EQSlot(slot - 1);
+            effectSelectionScreen.selfDestruct();
+        }
+
         if (this.effect === 'LowPass') {
             fxSlots[slot - 1] = new FilterSlot(slot - 1, 'LowPass');
             effectSelectionScreen.selfDestruct();
@@ -64,6 +69,7 @@ class EffectSelectionButton {
             fxSlots[slot - 1] = new FilterSlot(slot - 1, 'BandPass');
             effectSelectionScreen.selfDestruct();
         }
+
     }
 }
 

@@ -117,9 +117,12 @@ class FilterSlot extends Slot {
                 size: 15
             },
             color: 150
-        }
+        };
 
-        this.knobs = [new Knob(this.x - 90, this.y + 30), new Knob(this.x, this.y + 30), new Knob(this.x + 90, this.y + 30)];
+        this.knobs = [];
+        this.knobs[0] = new Knob(this.x - 90, this.y + 30);
+        this.knobs[1] = new Knob(this.x, this.y + 30);
+        this.knobs[2] = new Knob(this.x + 90, this.y + 30);
     }
 
     show() {
@@ -127,29 +130,124 @@ class FilterSlot extends Slot {
         fill(this.text.color);
         noStroke();
         textAlign(CENTER, CENTER);
+        translate(this.x, this.y);
 
         push();
         textSize(this.text.filter.size);
-        translate(this.x, this.y);
         text(this.text.filter.value, this.text.filter.x, this.text.filter.y);
         pop();
 
         push();
         textSize(this.text.f.size);
-        translate(this.x, this.y);
         text(this.text.f.value, this.text.f.x, this.text.f.y);
         pop();
 
         push();
         textSize(this.text.b.size);
-        translate(this.x, this.y);
         text(this.text.b.value, this.text.b.x, this.text.b.y);
         pop();
 
         push();
         textSize(this.text.r.size);
-        translate(this.x, this.y);
         text(this.text.r.value, this.text.r.x, this.text.r.y);
+        pop();
+        pop();
+
+        for (let i = 0; i < this.knobs.length; i++) {
+            this.knobs[i].show();
+        }
+        this.clearButton.show();
+    }
+
+    mousePressed() {
+        for (let i = 0; i < this.knobs.length; i++) {
+            this.knobs[i].changeValue();
+        }
+    }
+
+    mouseReleased() {
+        this.clearButton.clear();
+    }
+}
+
+
+class EQSlot extends Slot {
+
+    constructor(slot) {
+        super(slot);
+        this.clearButton = new ClearButton(this.x, this.y, this.currentSlot);
+
+        this.text = {
+            EQ: {
+                value: 'Equalizer',
+                x: 0,
+                y: -40,
+                size: 30
+            },
+            sub: {
+                value: 'Sub',
+                x: -100,
+                y: 0,
+                size: 15
+            },
+            low: {
+                value: 'Low',
+                x: -33,
+                y: 0,
+                size: 15
+            },
+            mid: {
+                value: 'Mid',
+                x: 33,
+                y: 0,
+                size: 15
+            },
+            high: {
+                value: 'High',
+                x: 100,
+                y: 0,
+                size: 15
+            },
+            color: 150
+        };
+
+        this.knobs = [];
+        this.knobs[0] = new Knob(this.x - 100, this.y + 30);
+        this.knobs[1] = new Knob(this.x - 33, this.y + 30);
+        this.knobs[2] = new Knob(this.x + 33, this.y + 30);
+        this.knobs[3] = new Knob(this.x + 100, this.y + 30);
+    }
+
+    show() {
+        push();
+        fill(this.text.color);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        translate(this.x, this.y);
+
+        push();
+        textSize(this.text.EQ.size);
+        text(this.text.EQ.value, this.text.EQ.x, this.text.EQ.y);
+        pop();
+
+        push();
+        textSize(this.text.sub.size);
+        text(this.text.sub.value, this.text.sub.x, this.text.sub.y);
+        pop();
+
+        push();
+        textSize(this.text.low.size);
+        text(this.text.low.value, this.text.low.x, this.text.low.y);
+        pop();
+
+        push();
+        textSize(this.text.mid.size);
+        text(this.text.mid.value, this.text.mid.x, this.text.mid.y);
+        pop();
+
+        push();
+        textSize(this.text.high.size);
+        text(this.text.high.value, this.text.high.x, this.text.high.y);
         pop();
         pop();
 
@@ -173,7 +271,7 @@ class FilterSlot extends Slot {
 
 class Knob {
 
-    constructor(x, y) {
+    constructor(x, y, address) {
         this.circle = {
             x: x,
             y: y,
@@ -185,11 +283,13 @@ class Knob {
             y2: 0 - (this.circle.r / 2),
             color: 80
         }
-        this.value = 0;
         this.range = {
             lower: -127,
             upper: 127
         }
+
+        this.value = 0;
+        this.address = address;
     }
 
     show() {

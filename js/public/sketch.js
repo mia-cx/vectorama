@@ -69,7 +69,5 @@ function circleHitbox(x, y, r) {
     let dy = y - mouseY;
     let distance = Math.sqrt(dx * dx + dy * dy);
 
-    if (distance < r / 2) {
-        return true;
-    }
+    return distance < r / 2
 }
