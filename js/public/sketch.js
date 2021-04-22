@@ -9,6 +9,9 @@ let effectSelectionScreen;
 let fxSlots = [];
 let state = 0;
 
+let oscillatorBox1;
+let oscillatorBox2;
+
 let mouseLock = false;
 
 function setup() {
@@ -21,6 +24,9 @@ function setup() {
     for (let i = 0; i < 4; i++) {
         fxSlots[i] = new EmptySlot(i);
     }
+
+    oscillatorBox1 = new Oscillator(325, 200, 1);
+    oscillatorBox2 = new Oscillator(325, 500, 2);
 }
 
 function draw() {
@@ -32,6 +38,9 @@ function draw() {
     if (state === 1) {
         effectSelectionScreen.show();
     }
+
+    oscillatorBox1.show();
+    oscillatorBox2.show();
 }
 
 function mousePressed() {
@@ -39,6 +48,8 @@ function mousePressed() {
         for(let i = 0; i < fxSlots.length; i++) {
             fxSlots[i].mousePressed();
         }
+        oscillatorBox1.mousePressed();
+        oscillatorBox2.mousePressed();
         return
     }
 }
