@@ -120,9 +120,9 @@ class FilterSlot extends Slot {
         };
 
         this.knobs = [];
-        this.knobs[0] = new Knob(this.x - 90, this.y + 30);
-        this.knobs[1] = new Knob(this.x, this.y + 30);
-        this.knobs[2] = new Knob(this.x + 90, this.y + 30);
+        this.knobs[0] = new Knob(this.x - 90, this.y + 30, 0);
+        this.knobs[1] = new Knob(this.x, this.y + 30, 0);
+        this.knobs[2] = new Knob(this.x + 90, this.y + 30, 0);
     }
 
     show() {
@@ -212,10 +212,10 @@ class EQSlot extends Slot {
         };
 
         this.knobs = [];
-        this.knobs[0] = new Knob(this.x - 100, this.y + 30);
-        this.knobs[1] = new Knob(this.x - 33, this.y + 30);
-        this.knobs[2] = new Knob(this.x + 33, this.y + 30);
-        this.knobs[3] = new Knob(this.x + 100, this.y + 30);
+        this.knobs[0] = new Knob(this.x - 100, this.y + 30, 0);
+        this.knobs[1] = new Knob(this.x - 33, this.y + 30, 0);
+        this.knobs[2] = new Knob(this.x + 33, this.y + 30, 0);
+        this.knobs[3] = new Knob(this.x + 100, this.y + 30, 0);
     }
 
     show() {
@@ -271,7 +271,7 @@ class EQSlot extends Slot {
 
 class Knob {
 
-    constructor(x, y, address) {
+    constructor(x, y, startValue, address) {
         this.circle = {
             x: x,
             y: y,
@@ -288,7 +288,8 @@ class Knob {
             upper: 127
         }
 
-        this.value = 0;
+        this.value = startValue;
+        this.startValue = startValue;
         this.address = address;
     }
 
@@ -327,6 +328,10 @@ class Knob {
                 y = mouseY
             }, 1);
         }
+    }
+
+    reset() {
+        this.value = this.startValue;
     }
 
     evaluate() {
