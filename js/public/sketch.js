@@ -12,6 +12,8 @@ let state = 0;
 let oscillatorBox1;
 let oscillatorBox2;
 
+let instance;
+
 let mouseLock = false;
 
 function setup() {
@@ -27,6 +29,10 @@ function setup() {
 
     oscillatorBox1 = new Oscillator(325, 200, 1);
     oscillatorBox2 = new Oscillator(325, 500, 2);
+
+    socket.on('/instance', (i) => {
+        instance = i;
+    });
 }
 
 function draw() {

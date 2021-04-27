@@ -120,9 +120,9 @@ class FilterSlot extends Slot {
         };
 
         this.knobs = [];
-        this.knobs[0] = new Knob(this.x - 90, this.y + 30, 0);
-        this.knobs[1] = new Knob(this.x, this.y + 30, 0);
-        this.knobs[2] = new Knob(this.x + 90, this.y + 30, 0);
+        this.knobs[0] = new Knob(this.x - 90, this.y + 30, 0, '/frequency');
+        this.knobs[1] = new Knob(this.x, this.y + 30, 0, '/bandwidth');
+        this.knobs[2] = new Knob(this.x + 90, this.y + 30, 0, '/rolloff');
     }
 
     show() {
@@ -212,10 +212,10 @@ class EQSlot extends Slot {
         };
 
         this.knobs = [];
-        this.knobs[0] = new Knob(this.x - 100, this.y + 30, 0);
-        this.knobs[1] = new Knob(this.x - 33, this.y + 30, 0);
-        this.knobs[2] = new Knob(this.x + 33, this.y + 30, 0);
-        this.knobs[3] = new Knob(this.x + 100, this.y + 30, 0);
+        this.knobs[0] = new Knob(this.x - 100, this.y + 30, 0, '/sub');
+        this.knobs[1] = new Knob(this.x - 33, this.y + 30, 0, '/low');
+        this.knobs[2] = new Knob(this.x + 33, this.y + 30, 0, '/mid');
+        this.knobs[3] = new Knob(this.x + 100, this.y + 30, 0, '/high');
     }
 
     show() {
@@ -325,9 +325,14 @@ class Knob {
                 if (this.value < this.range.lower) this.value = this.range.lower;
                 if (this.value > this.range.upper) this.value = this.range.upper;
 
+                this.sendData();
                 y = mouseY
             }, 1);
         }
+    }
+
+    sendData() {
+        socket.emit('/knobData', {address: this.address, value: this.value});
     }
 
     reset() {
@@ -385,7 +390,12 @@ class ClearButton {
     clear() {
         if (rectHitbox(this.x, this.y, 15, 15)) {
             fxSlots[this.currentSlot - 1] = new EmptySlot(this.currentSlot - 1);
+            this.sendData();
         }
+    }
+
+    sendData() {
+        socket.emit('/clearSlot', this.currentSlot);
     }
 }
 

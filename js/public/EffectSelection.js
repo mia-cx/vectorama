@@ -51,25 +51,32 @@ class EffectSelectionButton {
         if (this.effect === 'EQ') {
             fxSlots[slot - 1] = new EQSlot(slot - 1);
             effectSelectionScreen.selfDestruct();
+            this.sendData(this.effect, slot);
         }
-
         if (this.effect === 'LowPass') {
             fxSlots[slot - 1] = new FilterSlot(slot - 1, 'LowPass');
             effectSelectionScreen.selfDestruct();
+            this.sendData(this.effect, slot);
         }
         if (this.effect === 'HighPass') {
             fxSlots[slot - 1] = new FilterSlot(slot - 1, 'HighPass');
             effectSelectionScreen.selfDestruct();
+            this.sendData(this.effect, slot);
         }
         if (this.effect === 'NotchPass') {
             fxSlots[slot - 1] = new FilterSlot(slot - 1, 'NotchPass');
             effectSelectionScreen.selfDestruct();
+            this.sendData(this.effect, slot);
         }
         if (this.effect === 'BandPass') {
             fxSlots[slot - 1] = new FilterSlot(slot - 1, 'BandPass');
             effectSelectionScreen.selfDestruct();
+            this.sendData(this.effect, slot);
         }
+    }
 
+    sendData(effect, slot) {
+        socket.emit('/newEffect', {effect: effect, slot: slot});
     }
 }
 

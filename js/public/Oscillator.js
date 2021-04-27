@@ -124,7 +124,7 @@ class WaveFormSelectionBox extends Box{
             size: 17
         }
 
-        this.waveFormKnob = new WaveFormKnob(this.x, this.y);
+        this.waveFormKnob = new WaveFormKnob(this.x, this.y, 0, '/waveform');
     }
 
     show() {
@@ -198,10 +198,10 @@ class ADSRBox extends Box{
         };
 
         this.knobs = [];
-        this.knobs[0] = new Knob(this.x - 30, this.y - 20, -127);
-        this.knobs[1] = new Knob(this.x + 30, this.y - 20, -127);
-        this.knobs[2] = new Knob(this.x - 30, this.y + 40, -127);
-        this.knobs[3] = new Knob(this.x + 30, this.y + 40, -127);
+        this.knobs[0] = new Knob(this.x - 30, this.y - 20, -127, '/attack');
+        this.knobs[1] = new Knob(this.x + 30, this.y - 20, -127, '/decay');
+        this.knobs[2] = new Knob(this.x - 30, this.y + 40, -127, '/sustain');
+        this.knobs[3] = new Knob(this.x + 30, this.y + 40, -127, '/release');
     }
 
     show() {
@@ -251,7 +251,7 @@ class PitchBox extends Box{
             fill: 120
         }
 
-        this.knob = new Knob(this.x, this.y, 0);
+        this.knob = new Knob(this.x, this.y, 0, '/pitch');
 
         this.text = {
             pitch: {
@@ -270,7 +270,7 @@ class PitchBox extends Box{
                     mouseOver: 90,
                     mousePressed: 100
                 },
-                width: 100,
+                width: 80,
                 height: 20,
                 size: 20
             }
@@ -324,15 +324,20 @@ class PitchBox extends Box{
 
         if (rectHitbox(this.x + this.text.reset.x, this.y + this.text.reset.y, this.text.reset.width, this.text.reset.height)) {
             this.knob.reset();
+            this.sendReset();
         }
+    }
+
+    sendReset() {
+        socket.emit('/resetPitch');
     }
 }
 
 
 class WaveFormKnob extends Knob {
 
-    constructor(x, y) {
-        super(x, y, 0);
+    constructor(x, y, startValue, address) {
+        super(x, y, startValue, address);
     }
 
     changeValue() {
@@ -356,6 +361,7 @@ class WaveFormKnob extends Knob {
                     console.log(this.value);
                     y = mouseY;
                 }
+                this.sendData();
             })
         }
     }
