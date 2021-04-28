@@ -53,6 +53,21 @@ class EffectSelectionButton {
             effectSelectionScreen.selfDestruct();
             this.sendData(this.effect, slot);
         }
+        if (this.effect === 'Delay') {
+            fxSlots[slot - 1] = new DelaySlot(slot - 1);
+            effectSelectionScreen.selfDestruct();
+            this.sendData(this.effect, slot);
+        }
+        if (this.effect === 'Distortion') {
+            fxSlots[slot - 1] = new DistortionSlot(slot - 1);
+            effectSelectionScreen.selfDestruct();
+            this.sendData(this.effect, slot);
+        }
+        if (this.effect === 'WaveShaper') {
+            fxSlots[slot - 1] = new WaveShaperSlot(slot - 1);
+            effectSelectionScreen.selfDestruct();
+            this.sendData(this.effect, slot);
+        }
         if (this.effect === 'LowPass') {
             fxSlots[slot - 1] = new FilterSlot(slot - 1, 'LowPass');
             effectSelectionScreen.selfDestruct();

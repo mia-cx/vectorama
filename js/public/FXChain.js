@@ -269,6 +269,156 @@ class EQSlot extends Slot {
 }
 
 
+class DelaySlot extends Slot {
+
+    constructor(slot) {
+        super(slot);
+        this.clearButton = new ClearButton(this.x, this.y, this.currentSlot);
+
+        this.text = {
+            delay: {
+                value: 'Delay',
+                x: 0,
+                y: -40,
+                size: 30
+            },
+            color: 150
+        };
+
+        this.knobs = [];
+    }
+
+    show() {
+        push();
+        fill(this.text.color);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        translate(this.x, this.y);
+
+        push();
+        textSize(this.text.delay.size);
+        text(this.text.delay.value, this.text.delay.x, this.text.delay.y);
+        pop();
+        pop();
+
+        for (let i = 0; i < this.knobs.length; i++) {
+            this.knobs[i].show();
+        }
+        this.clearButton.show();
+    }
+
+    mousePressed() {
+        for (let i = 0; i < this.knobs.length; i++) {
+            this.knobs[i].changeValue();
+        }
+    }
+
+    mouseReleased() {
+        this.clearButton.clear();
+    }
+}
+
+
+class DistortionSlot extends Slot {
+
+    constructor(slot) {
+        super(slot);
+        this.clearButton = new ClearButton(this.x, this.y, this.currentSlot);
+
+        this.text = {
+            distortion: {
+                value: 'Distortion',
+                x: 0,
+                y: -40,
+                size: 30
+            },
+            color: 150
+        };
+
+        this.knobs = [];
+    }
+
+    show() {
+        push();
+        fill(this.text.color);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        translate(this.x, this.y);
+
+        push();
+        textSize(this.text.distortion.size);
+        text(this.text.distortion.value, this.text.distortion.x, this.text.distortion.y);
+        pop();
+        pop();
+
+        for (let i = 0; i < this.knobs.length; i++) {
+            this.knobs[i].show();
+        }
+        this.clearButton.show();
+    }
+
+    mousePressed() {
+        for (let i = 0; i < this.knobs.length; i++) {
+            this.knobs[i].changeValue();
+        }
+    }
+
+    mouseReleased() {
+        this.clearButton.clear();
+    }
+}
+
+
+class WaveShaperSlot extends Slot {
+
+    constructor(slot) {
+        super(slot);
+        this.clearButton = new ClearButton(this.x, this.y, this.currentSlot);
+
+        this.text = {
+            waveShaper: {
+                value: 'WaveShaper',
+                x: 0,
+                y: -40,
+                size: 30
+            },
+            color: 150
+        };
+
+        this.knobs = [];
+    }
+
+    show() {
+        push();
+        fill(this.text.color);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        translate(this.x, this.y);
+
+        push();
+        textSize(this.text.waveShaper.size);
+        text(this.text.waveShaper.value, this.text.waveShaper.x, this.text.waveShaper.y);
+        pop();
+        pop();
+
+        for (let i = 0; i < this.knobs.length; i++) {
+            this.knobs[i].show();
+        }
+        this.clearButton.show();
+    }
+
+    mousePressed() {
+        for (let i = 0; i < this.knobs.length; i++) {
+            this.knobs[i].changeValue();
+        }
+    }
+
+    mouseReleased() {
+        this.clearButton.clear();
+    }
+}
+
+
 class Knob {
 
     constructor(x, y, startValue, address) {

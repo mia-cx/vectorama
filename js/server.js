@@ -97,20 +97,6 @@ udpPort.on('error', (err) => {
 
 udpPort.open();
 
-// udpPort.send({
-//     address: '/test',
-//     args: [
-//         {
-//             type: 'i',
-//             value: 420
-//         },
-//         {
-//             type: 's',
-//             value: 'string'
-//         }
-//     ]
-// }, 'localhost', 3006);
-
 console.log('The server is running');
 
 // use socket.emit to send messages and socket.on to receive messages
